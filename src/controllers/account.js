@@ -18,7 +18,7 @@ export const createAccount = asyncHandler(async (req, res) => {
         throw new ErrorResponse("Account already exists", CONFLICT);
     }
 
-    let account = new Account({ ...data });
+    let account = new Account(data);
 
     account = await account.save();
 
