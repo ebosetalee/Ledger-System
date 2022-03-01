@@ -9,8 +9,8 @@ import accountRoutes from "./routes/account.js";
 const app = express();
 
 process.on("uncaughtException", err => {
-    console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
-    console.log(err);
+    console.error("UNCAUGHT EXCEPTION! 💥 Shutting down...");
+    console.error(err);
     process.exit(1);
 });
 
@@ -20,7 +20,5 @@ app.use("/api/v1/account", accountRoutes);
 
 app.use(errorHandler);
 
-console.log(Date());
-console.log(new Date())
 
 export default app;
