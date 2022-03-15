@@ -50,7 +50,7 @@ export const updateAccountWithId = asyncHandler(async (req, res) => {
         throw new ErrorResponse("Account not found", NOT_FOUND);
     }
 
-    const data = await Account.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const data = await Account.findByIdAndUpdate(req.params.id, $set: { req.body } , { new: true });
 
     res.status(OK).json({ message: "Account updated successfully", account: data });
 });
