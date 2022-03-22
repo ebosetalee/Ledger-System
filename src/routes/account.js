@@ -2,11 +2,17 @@
 import express from "express";
 import validate from "../middleware/validate.js";
 import schema from "../validation-schema/index.js";
-import { createAccount } from "../controllers/account.js";
+import { createAccount, getAccount, updateAccount, updateAccountWithId } from "../controllers/account.js";
 
 const router = express.Router();
-const { CREATE } = schema;
+const { CREATE, UPDATE } = schema;
 
 router.post("/", validate(CREATE), createAccount);
+
+router.get("/:id", getAccount);
+
+router.patch("/", validate(UPDATE), updateAccount);
+
+router.patch("/:id", updateAccountWithId);
 
 export default router;

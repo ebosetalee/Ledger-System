@@ -6,6 +6,11 @@ const CREATE = Joi.object().keys({
     balance: Joi.number().optional(),
 });
 
+const UPDATE = Joi.object().keys({
+    account_number: Joi.number().required().min(9),
+});
+
 export default {
     CREATE,
+    UPDATE,
 };
