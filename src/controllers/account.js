@@ -1,6 +1,6 @@
 //@ts-check
 import Account from "../models/accounts.js";
-import { checkAccountExists } from "../utils/helpers.js";
+import { checkAccountExists, checkAccount } from "../utils/helpers.js";
 import { StatusCodes } from "http-status-codes";
 import ErrorResponse from "../utils/errors/index.js";
 import asyncHandler from "../middleware/async.js";
@@ -32,7 +32,7 @@ export const createAccount = asyncHandler(async (req, res) => {
 export const getAccount = asyncHandler(async (req, res) => {
     console.info("Getting Account details...");
 
-    const account = await checkAccountExists(req.params.id, "_id");
+    const account = await checkAccount(req.params.id, "_id");
 
     if (!account) {
         throw new ErrorResponse("Account not found", NOT_FOUND);
@@ -44,7 +44,7 @@ export const getAccount = asyncHandler(async (req, res) => {
 export const updateAccountWithId = asyncHandler(async (req, res) => {
     console.info("updating Account details using id...");
 
-    const account = await checkAccountExists(req.params.id, "_id");
+    const account = await checkAccount(req.params.id, "_id");
 
     if (!account) {
         throw new ErrorResponse("Account not found", NOT_FOUND);
@@ -58,7 +58,7 @@ export const updateAccountWithId = asyncHandler(async (req, res) => {
 export const updateAccount = asyncHandler(async (req, res) => {
     console.info("updating Account details...");
 
-    const account = await checkAccountExists(req.account_number, "account_number");
+    const account = await checkAccount(req.account_number, "account_number");
 
     if (!account) {
         throw new ErrorResponse("Account not found", NOT_FOUND);
@@ -67,4 +67,22 @@ export const updateAccount = asyncHandler(async (req, res) => {
     const data = await Account.findOneAndUpdate({ account_number: req.account_number }, req.body, { new: true });
 
     res.status(OK).json({ message: "Account updated successfully", account: data });
+});
+
+export const disableAccount = asyncHandler(async (req, res) => {
+    console.info("disabling Account...");
+
+    const account = await checkAccountExists(req.params.id, "_id");
+
+    if (!account) {
+        throw new ErrorResponse("Account not found", NOT_FOUND);
+    }
+
+    if (account.disabled_at) {
+        throw new ErrorResponse("Account has been disabled", CONFLICT);
+    }
+
+    const data = await Account.findByIdAndUpdate(req.params.id, { disabled_at: new Date() }, { new: true });
+
+    res.status(OK).json({ message: "Account disabled successfully", account: data });
 });

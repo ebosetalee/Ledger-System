@@ -5,7 +5,7 @@ const accountSchema = new mongoose.Schema(
         account_number: {
             type: Number,
             required: true,
-            unique: true
+            unique: true,
         },
         account_name: {
             type: String,
@@ -19,7 +19,7 @@ const accountSchema = new mongoose.Schema(
             type: Date,
             select: false,
             default: null,
-        }
+        },
     },
     {
         timestamps: true,
