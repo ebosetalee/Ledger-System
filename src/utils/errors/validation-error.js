@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import ErrorResponse from "./index.js";
 
 class ValidationError extends ErrorResponse {

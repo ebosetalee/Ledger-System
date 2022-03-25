@@ -20,5 +20,4 @@ app.use("/api/v1/account", accountRoutes);
 
 app.use(errorHandler);
 
-
 export default app;
