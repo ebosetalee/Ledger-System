@@ -1,8 +1,8 @@
 import { StatusCodes } from "http-status-codes";
 const { INTERNAL_SERVER_ERROR, NOT_FOUND, BAD_REQUEST, PRECONDITION_FAILED } = StatusCodes;
 
-const errorHandler = (err, req, res) => {
-    console.error(err);
+const errorHandler = (err, req, res, next) => {
+    console.error("error:", err);
     let error = {
         statusCode: err.statusCode || INTERNAL_SERVER_ERROR,
         message: err.message || "Something went wrong try again later",
@@ -32,7 +32,7 @@ const errorHandler = (err, req, res) => {
         }
         error.statusCode = NOT_FOUND;
     }
-
+    next();
     return res.status(error.statusCode).json({ message: error.message });
 };
 
