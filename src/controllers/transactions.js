@@ -31,9 +31,6 @@ export const makeDeposit = asyncHandler(async (req, res) => {
         // deduct from office bank account
         await updateAccount({ _id: mainBank._id }, { balance: mainBank.balance - amount }, { session });
 
-        if (mainBank) {
-            throw "user not found";
-        }
         // fund receiver account
         account = await updateAccount({ _id: user._id }, { balance: user.balance + amount }, { session });
 
