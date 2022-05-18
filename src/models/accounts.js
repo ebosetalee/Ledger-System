@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const accountSchema = new mongoose.Schema(
     {
         account_number: {
-            type: Number,
+            type: String,
             required: true,
             unique: true,
         },

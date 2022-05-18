@@ -1,10 +1,10 @@
 //@ts-check
 import "dotenv/config";
 import express from "express";
-import errorHandler from "./middleware/error-handler.js";
+import ErrorHandler from "./middleware/error-handler.js";
 
 // controllers
-import accountRoutes from "./routes/account.js";
+import v1Routes from "./routes/index.js";
 
 const app = express();
 
@@ -16,8 +16,8 @@ process.on("uncaughtException", err => {
 
 app.use(express.json());
 
-app.use("/api/v1/account", accountRoutes);
+app.use("/api/v1", v1Routes);
 
-app.use(errorHandler);
+app.use(ErrorHandler);
 
 export default app;
